@@ -22,11 +22,6 @@ jobs:
 
       - name: 打包
         run: npm run docs:build
-      - name: Prepare SSH
-        run: |
-          cd ~ && mkdir .ssh &&
-          touch ~/.ssh/known_hosts &&
-          echo "${{ secrets.ALIYUN }}" > ~/.ssh/known_hosts
 
       - name: 发布到阿里云
         uses: easingthemes/ssh-deploy@v2.1.5
@@ -35,8 +30,9 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.ALIYUN }}
           #SCp参数
           ARGS: "-rltgoDzvO --delete"
-          #源目录
-          SOURCE: "dist/"
+          #源目录 docs/.vitepress/dist
+          #SOURCE: "dist/"
+          SOURCE: "docs/.vitepress/dist/"
           #服务器Ip:换成你的服务器iP
           REMOTE_HOST: "47.94.13.185"
           #用户
